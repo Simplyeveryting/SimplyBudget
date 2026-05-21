@@ -7,6 +7,88 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
     
     <style>
+	
+	body {
+    /* 1. Prevents the "bounce" effect at the top/bottom of the screen */
+    overscroll-behavior-y: contain; 
+    
+    /* 2. Makes scrolling feel "native" and fluid on mobile devices */
+    -webkit-overflow-scrolling: touch; 
+    
+    /* 3. Ensures the app takes up the full mobile screen height */
+    min-height: 100vh;
+    
+    /* 4. Prevents accidental text selection while tapping buttons */
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    
+    /* 5. Clean font and color */
+    background: #0b0c16;
+    color: #f3f4f6;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    
+    /* 6. Fixes the "layout shift" when the mobile keyboard pops up */
+    padding-bottom: env(safe-area-inset-bottom);
+}
+	.app-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 15px;
+}
+
+.slide {
+    background: #1a1c2e;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.hero-number { font-size: 2rem; font-weight: bold; color: #3b82f6; }
+
+.pill {
+    background: #2d314d;
+    border: none;
+    padding: 10px;
+    color: white;
+    border-radius: 8px;
+    margin: 2px;
+}
+
+.save-btn {
+    width: 100%;
+    padding: 15px;
+    background: #3b82f6;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+	
+	/* 1. Prevent "bounce" and zoom glitches */
+html, body {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+}
+
+/* 2. Make buttons feel physical when tapped */
+button:active {
+    transform: scale(0.98);
+    transition: transform 0.1s ease;
+}
+
+/* 3. Smooth transitions for panels */
+.panel {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+/* 4. Improve touch scrolling */
+.scroll-area {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain; /* Prevents background page pull */
+}
+	
         /* Modern Premium Dark Theme & Layout */
         * {
             box-sizing: border-box;
@@ -669,6 +751,8 @@
     </div>
 </div>
 
+
+
 <script>
 
 // Function to format the number once the user finishes typing
@@ -737,7 +821,20 @@ function saveEntry() {
         document.getElementById('optP1').innerText = p1Name;
         document.getElementById('optP2').innerText = p2Name;
         
-        updateDashboard();
+       function updateDashboard() {
+    const list = document.getElementById('ledgerList');
+    
+    // Add a quick fade out
+    list.style.opacity = '0';
+    
+    setTimeout(() => {
+        // ... (Insert your existing loop logic here to rebuild the list) ...
+        
+        // Fade back in
+        list.style.transition = 'opacity 0.3s ease';
+        list.style.opacity = '1';
+    }, 150);
+}
     }
 
     function handleTypeChange() {
@@ -1026,6 +1123,32 @@ function saveEntry() {
         handleNameChange();
         handleTypeChange();
     };
+	
+	let selectedDay = 'Mon';
+
+function setDay(day) {
+    selectedDay = day;
+    // Visually highlight the active button
+    document.querySelectorAll('.pill').forEach(btn => {
+        btn.style.background = btn.innerText === day ? '#3b82f6' : '#2d314d';
+    });
+}
+
+function saveEntry() {
+    const name = document.getElementById('entryName').value;
+    const amount = document.getElementById('entryAmount').value;
+    
+    if(!name || !amount) return alert("Fill in the fields!");
+
+    const entry = { name, amount, day: selectedDay };
+    let ledger = JSON.parse(localStorage.getItem('myBudget') || '[]');
+    ledger.push(entry);
+    localStorage.setItem('myBudget', JSON.stringify(ledger));
+    
+    alert("Saved!");
+    location.reload(); // Quick way to refresh UI
+}
+	
 </script>
 
 </body>
