@@ -1,0 +1,6 @@
+{
+  "appId": "com.simplybudget.app",
+  "appName": "SimplyBudget",
+  "webDir": ".", 
+  "bundledWebRuntime": false
+}
