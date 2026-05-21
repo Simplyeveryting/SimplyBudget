@@ -575,8 +575,10 @@
     </div>
 
     <div class="grid">
-        <div class="panel">
+        <div class="panel">-
             <div class="panel-title">✍️ Add Entry</div>
+			
+			
             
          <div class="name-setup-box">
     <div class="input-row">
@@ -611,13 +613,31 @@
                         <option value="bill">Fixed Bill (-)</option>
                         <option value="savings">Savings (-)</option>
                     </select>
+					
+					
+					
                 </div>
                 <div class="input-box">
                     <label>Cycle</label>
                     <select id="entryFrequency" onchange="toggleFormDates()">
                         <option value="weekly">Weekly</option>
                         <option value="monthly">Monthly</option>
+						
                     </select>
+					</div> </div> <div class="input-row">
+        <div class="input-box">
+            <label id="dateLabel">Day of the Week</label>
+            <select id="entryDateValue">
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+            </select>
+        </div>
+    </div>
                 </div>
             </div>
 
